@@ -84,7 +84,7 @@
             <v-checkbox
             v-model="ecp"
             :rules="[issue==true || ecp==true || vba==true || 'You must Select at least one calculate method.']"
-            label="Equvalance Pertisioning"
+            label="Equivalence Partitioning"
           ></v-checkbox>
           </v-col>
           <v-col>
@@ -124,14 +124,14 @@
          <v-row v-if="issue">
          <v-col>
             <h3>Testing Issues</h3>
-          * Comming Soon
+          * Coming Soon
          </v-col>
         </v-row>
         <br>
         <v-row v-if="ecp">
          <v-col>
-            <h3>Equbalance Class Pertisioning</h3>
-          * Comming Soon
+            <h3>Equivalence Class Partitioning</h3>
+          * Coming Soon
          </v-col>
         </v-row>
         <br>
