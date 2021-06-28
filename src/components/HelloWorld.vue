@@ -131,7 +131,7 @@
         <v-row v-if="ecp">
          <v-col>
             <h3>Equbalance Class Pertisioning</h3>
-          * Comming Soon {{calculate}}
+          * Comming Soon
          </v-col>
         </v-row>
         <br>
@@ -139,17 +139,57 @@
          <v-col>
             <h3>Boundary Value Analysis</h3>
             <br>
-            <v-row class="mx-auto" style="width:800px;text-align:center;border-bottom: 2px solid gray">
-              <v-col>
-                <div style="text-align:right">-1<span style="margin-left:30px;color:red" ><b>0</b></span></div>
+            <v-card class="mx-auto pa-5" elevation="0" style="max-width:900px;background-color:white;border-radius:15px">
+              <v-row class="mx-auto" style="max-width:800px;">
+              <v-col cols="6" style="text-align:center">
+                <div style="margin-left:100px;color:red;">Boundary</div>
               </v-col>
-              <v-col>
-                <div style="margin-left:20px;text-align:left">1<span style="text-align:right;margin-left:190px;" >29</span></div>
-              </v-col>
-              <v-col>
-                <div style="text-align:left"><span style="margin-right:30px;color:red" ><b>30</b></span>31</div>
+              <v-col cols="6" style="text-align:center">
+                <div style="margin-right:100px;color:red;">Boundary</div>
               </v-col>
             </v-row>
+            <v-row 
+              class="mx-auto" 
+              style="max-width:800px;text-align:center;border-bottom: 2px dotted gray">
+              <v-col>
+                <div style="text-align:right">{{minBoundary-1}}<span style="margin-left:30px;color:red" ><b>{{minBoundary}}</b></span></div>
+              </v-col>
+              <v-col>
+                <div style="margin-left:10px;text-align:left">{{parseInt(minBoundary)+1}}<span style="text-align:right;margin-left:190px;" >{{maxBoundary-1}}</span></div>
+              </v-col>
+              <v-col>
+                <div style="text-align:left"><span style="margin-right:30px;color:red" ><b>{{maxBoundary}}</b></span>{{ parseInt(maxBoundary)+1 }}</div>
+              </v-col>
+            </v-row>
+            <v-row class="mx-auto" style="max-width:800px;">
+              <v-col cols="6" style="text-align:right;padding-right:40px">
+                <div>Boundary-1 <span style="margin-left:50px;">Boundary+1</span></div>
+              </v-col>
+              <v-col cols="6" style="text-align:left;padding-left:60px">
+                <div><span style="margin-right:50px;">Boundary-1</span>Boundary+1</div>
+              </v-col>
+            </v-row>
+
+<!-- test case -->
+            <v-row>
+              <v-col>
+                <br>
+                <b>Test Cases are : </b> {{parseInt(minBoundary)-1}} , {{parseInt(minBoundary)}} , {{parseInt(minBoundary)+1}} , {{parseInt(maxBoundary)-1}} , {{parseInt(maxBoundary)}}  , {{parseInt(maxBoundary)+1}}  <br>
+                <br>
+                <table>
+                  <tr>
+                    <th>Valid Test Case</th>
+                    <th>Invalid TestCase</th>
+                  </tr>
+                  <tr>
+                    <td>{{parseInt(minBoundary)}} , {{parseInt(minBoundary)+1}} , {{parseInt(maxBoundary)-1}} , {{parseInt(maxBoundary)}}  </td>
+                    <td>{{parseInt(minBoundary)-1}} , {{parseInt(maxBoundary)+1}} </td>
+                  </tr>
+                </table>
+              </v-col>
+            </v-row>
+
+            </v-card>
          </v-col>
         </v-row>
        </v-card-text>
@@ -174,6 +214,8 @@
           value: ""
         }
       ],
+      minBoundary:"",
+      maxBoundary:"",
       valid: true,
       name: '',
       nameRules: [
@@ -204,10 +246,21 @@
       deleteReq(index,field){
         field.splice(index, 1)
       },
+      calculateRange(){
+        var ranges 
+          for(var i=0;i<this.requirements.length;i++){
+            if(this.requirements[i].key=="Range"){
+            ranges  = this.requirements[i].value.split('-');
+            }
+          }
+          this.minBoundary = ranges[0]
+          this.maxBoundary = ranges[1]
+      },
       validate () {
         this.$refs.form.validate()
         if(this.$refs.form.validate()){
           this.calculate=true;
+          this.calculateRange();
         }
         else{
           this.calculate=false;
@@ -227,5 +280,20 @@
 .text-field .col {
   padding-bottom: 0 !important;
   padding-top: 0 !important;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(odd) {
+  background-color: #dddddd;
 }
 </style>
